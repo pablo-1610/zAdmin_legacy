@@ -1,28 +1,25 @@
-fx_version 'bodacious'
+fx_version 'adamant'
+
 game 'gta5'
 
 shared_scripts {
-    "config/permissions.lua",
-    "config/translation.lua"
-}
-
-server_scripts {
-    "config/functions.lua",
-    "server/objects/*.lua",
-    "server/*.lua",
+    "shared/*.lua"
 }
 
 client_scripts {
-    "vendors/RageUI/RMenu.lua",
-    "vendors/RageUI/menu/RageUI.lua",
-    "vendors/RageUI/menu/Menu.lua",
-    "vendors/RageUI/menu/MenuController.lua",
-    "vendors/RageUI/components/*.lua",
-    "vendors/RageUI/menu/elements/*.lua",
-    "vendors/RageUI/menu/items/*.lua",
-    "vendors/RageUI/menu/panels/*.lua",
-    "vendors/RageUI/menu/windows/*.lua",
-
-    "client/objects/*.lua",
     "client/*.lua",
+    "services/RageUI/client/RMenu.lua",
+    "services/RageUI/client/menu/RageUI.lua",
+    "services/RageUI/client/menu/Menu.lua",
+    "services/RageUI/client/menu/MenuController.lua",
+    "services/RageUI/client/components/*.lua",
+    "services/RageUI/client/menu/elements/*.lua",
+    "services/RageUI/client/menu/items/*.lua",
+    "services/RageUI/client/menu/panels/*.lua",
+    "services/RageUI/client/menu/windows/*.lua",
+}
+
+server_scripts {
+    "@mysql-async/lib/MySQL.lua",
+    "server/*.lua"
 }

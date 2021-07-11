@@ -1,3 +1,4 @@
+
 ---- event from server to show notification
 RegisterNetEvent("RageUI:Popup")
 AddEventHandler("RageUI:Popup", function(array)
