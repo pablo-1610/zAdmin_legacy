@@ -59,7 +59,7 @@ end)
 
 Citizen.CreateThread(function()
     while ESX == nil do
-        TriggerEvent('::{korioz#0110}::esx:getSharedObject', function(obj) ESX = obj end)
+        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
         Citizen.Wait(1)
     end
     if not DecorExistOn(PlayerPedId(), "isStaffMode") then
