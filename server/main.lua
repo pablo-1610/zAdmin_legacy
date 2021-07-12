@@ -32,12 +32,12 @@ local function isWebhookSet(val)
     return val ~= nil and val ~= ""
 end
 
-TriggerEvent('::{korioz#0110}::esx:getSharedObject', function(obj)
+TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-RegisterServerEvent('::{korioz#0110}::esx:playerLoaded')
-AddEventHandler('::{korioz#0110}::esx:playerLoaded', function(source, xPlayer)
+RegisterServerEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function(source, xPlayer)
     local source = source
     if players[source] then
         return
@@ -80,7 +80,7 @@ AddEventHandler("adminmenu:setStaffState", function(newVal, sneaky)
     if not sneaky then
         for k,player in pairs(players) do
             if player.rank ~= "user" and inService[k] ~= nil then
-                TriggerClientEvent("::{korioz#0110}::esx:showNotification", k, byState[newVal]:format(GetPlayerName(source)))
+                TriggerClientEvent("esx:showNotification", k, byState[newVal]:format(GetPlayerName(source)))
             end
         end
     end
@@ -124,7 +124,7 @@ AddEventHandler("adminmenu:tppc", function(target, coords)
         return
     end
     TriggerClientEvent("adminmenu:setCoords", target, vector3(215.76, -810.12, 30.73))
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~g~Téléportation effectuée")
+    TriggerClientEvent("esx:showNotification", source, "~g~Téléportation effectuée")
 end)
 
 RegisterNetEvent("adminmenu:give")
@@ -138,12 +138,12 @@ AddEventHandler("adminmenu:give", function(target, itemName, qty)
     local xPlayer = ESX.GetPlayerFromId(tonumber(target))
     if xPlayer then
         xPlayer.addInventoryItem(itemName, tonumber(qty))
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Give de %sx%s au joueur %s effectué"):format(qty, itemName, GetPlayerName(target)))
+        TriggerClientEvent("esx:showNotification", source, ("~g~Give de %sx%s au joueur %s effectué"):format(qty, itemName, GetPlayerName(target)))
         if isWebhookSet(Config.webhook.onItemGive) then
             sendWebhook(("L'utilisateur %s a give %sx%s a %s"):format(GetPlayerName(source), qty, itemName, GetPlayerName(target)), "grey", Config.webhook.onItemGive)
         end
     else
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~Ce joueur n'est plus connecté")
+        TriggerClientEvent("esx:showNotification", source, "~r~Ce joueur n'est plus connecté")
     end
 end)
 
@@ -155,8 +155,8 @@ AddEventHandler("adminmenu:message", function(target, message)
         DropPlayer(source, "Permission invalide")
         return
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Message envoyé à %s"):format(GetPlayerName(target)))
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", target, ("~r~Message du staff~s~: %s"):format(message))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Message envoyé à %s"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", target, ("~r~Message du staff~s~: %s"):format(message))
     if isWebhookSet(Config.webhook.onMessage) then
         sendWebhook(("L'utilisateur %s a envoyé un message à %s:\n\n__%s__"):format(GetPlayerName(source), GetPlayerName(target), message), "grey", Config.webhook.onMessage)
     end
@@ -170,7 +170,7 @@ AddEventHandler("adminmenu:kick", function(target, message)
         DropPlayer(source, "Permission invalide")
         return
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Expulsion de %s effectuée"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Expulsion de %s effectuée"):format(GetPlayerName(target)))
     local name = GetPlayerName(target)
     DropPlayer(target, ("[Admin] Expulsé: %s"):format(message))
     if isWebhookSet(Config.webhook.onKick) then
@@ -186,8 +186,8 @@ AddEventHandler("adminmenu:revive", function(target)
         DropPlayer(source, "Permission invalide")
         return
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Revive de %s effectué"):format(GetPlayerName(target)))
-    TriggerClientEvent("::{korioz#0110}::esx_ambulancejob:revive", target)
+    TriggerClientEvent("esx:showNotification", source, ("~g~Revive de %s effectué"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx_ambulancejob:revive", target)
     local name = GetPlayerName(target)
     if isWebhookSet(Config.webhook.onRevive) then
         sendWebhook(("L'utilisateur %s a revive %s"):format(GetPlayerName(source), name), "grey", Config.webhook.onRevive)
@@ -202,8 +202,8 @@ AddEventHandler("adminmenu:heal", function(target)
         DropPlayer(source, "Permission invalide")
         return
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Heal de %s effectué"):format(GetPlayerName(target)))
-    TriggerClientEvent('::{korioz#0110}::esx_status:healPlayer', target)
+    TriggerClientEvent("esx:showNotification", source, ("~g~Heal de %s effectué"):format(GetPlayerName(target)))
+    TriggerClientEvent('esx_status:healPlayer', target)
     local name = GetPlayerName(target)
     if isWebhookSet(Config.webhook.onHeal) then
         sendWebhook(("L'utilisateur %s a heal %s"):format(GetPlayerName(source), name), "grey", Config.webhook.onHeal)
@@ -223,8 +223,8 @@ AddEventHandler("adminmenu:warn", function(target, reason)
         warnedPlayers[license] = 0
     end
     warnedPlayers[license] = (warnedPlayers[license] + 1)
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Warn envoyé à %s"):format(GetPlayerName(target)))
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", target, ("~r~Vous avez reçu un avertissement~s~: %s"):format(reason))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Warn envoyé à %s"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", target, ("~r~Vous avez reçu un avertissement~s~: %s"):format(reason))
     TriggerClientEvent("adminmenu:receivewarn", target, reason)
     print(json.encode(warnedPlayers[license]))
     if warnedPlayers[license] > 2 then
@@ -285,7 +285,7 @@ AddEventHandler("adminmenu:giveBoutique", function(target, ammount)
     end
     local xPlayer = ESX.GetPlayerFromId(target)
     local name = GetPlayerName(target)
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~g~Give effectué")
+    TriggerClientEvent("esx:showNotification", source, "~g~Give effectué")
     MySQL.Async.execute("UPDATE users SET falcoin = falcoin + "..ammount.." WHERE identifier='" .. xPlayer.identifier .. "';", {}, function() end)
     if isWebhookSet(Config.webhook.onGive) then
         sendWebhook(("L'utilisateur %s a give des pts boutiques a %s"):format(GetPlayerName(source), name), "grey", Config.webhook.onGive)
@@ -301,9 +301,9 @@ AddEventHandler("adminmenu:spawnVehicle", function(model, target)
         return
     end
     if target ~= nil then
-        TriggerClientEvent("::{korioz#0110}::esx:spawnVehicle", target, model)
+        TriggerClientEvent("esx:spawnVehicle", target, model)
     else
-        TriggerClientEvent("::{korioz#0110}::esx:spawnVehicle", source, model)
+        TriggerClientEvent("esx:spawnVehicle", source, model)
     end
 end)
 
@@ -321,7 +321,7 @@ AddEventHandler("adminmenu:setGroup", function(target, group)
         ESX.SavePlayer(xPlayer, function() end)
         players[source].rank = group
         TriggerClientEvent("adminmenu:cbPermLevel", target, group)
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Changement du rang de %s effectué"):format(GetPlayerName(target)))
+        TriggerClientEvent("esx:showNotification", source, ("~g~Changement du rang de %s effectué"):format(GetPlayerName(target)))
         for source, player in pairs(players) do
             if isStaff(source) then
                 TriggerClientEvent("adminmenu:updatePlayers", source, players)
@@ -332,7 +332,7 @@ AddEventHandler("adminmenu:setGroup", function(target, group)
             sendWebhook(("L'utilisateur %s a changé le groupe de %s pour le groupe: __%s__"):format(GetPlayerName(source), name, group), "red", Config.webhook.onGroupChange)
         end
     else
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~Ce joueur n'est plus connecté")
+        TriggerClientEvent("esx:showNotification", source, "~r~Ce joueur n'est plus connecté")
     end
 end)
 
@@ -350,7 +350,7 @@ AddEventHandler("adminmenu:clearInv", function(target)
             xPlayer.setInventoryItem(xPlayer.inventory[i].name, 0)
         end
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Clear inventaire de %s effectuée"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Clear inventaire de %s effectuée"):format(GetPlayerName(target)))
     if isWebhookSet(Config.webhook.onClear) then
         sendWebhook(("L'utilisateur %s a clear inventaire %s"):format(GetPlayerName(source), GetPlayerName(target)), "grey", Config.webhook.onClear)
     end
@@ -369,7 +369,7 @@ AddEventHandler("adminmenu:clearLoadout", function(target)
     for i = #xPlayer.loadout, 1, -1 do
         xPlayer.removeWeapon(xPlayer.loadout[i].name)
     end
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Clear des armes de %s effectuée"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Clear des armes de %s effectuée"):format(GetPlayerName(target)))
     if isWebhookSet(Config.webhook.onClear) then
         sendWebhook(("L'utilisateur %s a clear les armes de %s"):format(GetPlayerName(source), GetPlayerName(target)), "grey", Config.webhook.onClear)
     end
@@ -385,7 +385,7 @@ AddEventHandler("adminmenu:addMoney", function(target, ammount)
     end
     local xPlayer = ESX.GetPlayerFromId(target)
     xPlayer.addAccountMoney("cash", ammount)
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, ("~g~Give d'argent à %s effectuée"):format(GetPlayerName(target)))
+    TriggerClientEvent("esx:showNotification", source, ("~g~Give d'argent à %s effectuée"):format(GetPlayerName(target)))
     if isWebhookSet(Config.webhook.onMoneyGive) then
         sendWebhook(("L'utilisateur %s a give %s$ à %s"):format(GetPlayerName(source), ammount, GetPlayerName(target)), "grey", Config.webhook.onMoneyGive)
     end
@@ -407,12 +407,12 @@ end)
 RegisterServerEvent("euhtesserieuxmek")
 AddEventHandler("euhtesserieuxmek", function()
     local _source = source
-    TriggerEvent("::{korioz#0110}::BanSql:ICheatServer", _source, "Le cheat ... c'est mal !")
+    TriggerEvent("BanSql:ICheatServer", _source, "Le cheat ... c'est mal !")
 end)
 
 AddEventHandler("clearPedTasksEvent", function(source, data)
     local _source = source
-    TriggerEvent("::{korioz#0110}::BanSql:ICheatServer", _source, "Le cheat ... c'est mal !")
+    TriggerEvent("BanSql:ICheatServer", _source, "Le cheat ... c'est mal !")
     print("~y~ID: ".._source.." a essayé de truc")
 end)
 

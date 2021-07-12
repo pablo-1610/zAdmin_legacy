@@ -10,13 +10,13 @@ AddEventHandler("adminmenu:takeReport", function(reportId)
         return
     end
     if not reportsTable[reportId] then
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~[Report] ~s~Ce report n'est plus en attente de prise en charge")
+        TriggerClientEvent("esx:showNotification", source, "~r~[Report] ~s~Ce report n'est plus en attente de prise en charge")
         return
     end
     reportsTable[reportId].takenBy = GetPlayerName(source)
     reportsTable[reportId].taken = true
     if players[reportId] ~= nil then
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", reportId, "~r~[Report] ~s~Votre report a été pris en charge.")
+        TriggerClientEvent("esx:showNotification", reportId, "~r~[Report] ~s~Votre report a été pris en charge.")
     end
     notifyActiveStaff("~r~[Report] ~s~Le staff ~r~"..GetPlayerName(source).."~s~ a pris en charge le report ~y~n°"..reportsTable[reportId].uniqueId)
     local coords = GetEntityCoords(GetPlayerPed(reportId))
@@ -33,11 +33,11 @@ AddEventHandler("adminmenu:closeReport", function(reportId)
         return
     end
     if not reportsTable[reportId] then
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~[Report] ~s~Ce report n'est plus valide")
+        TriggerClientEvent("esx:showNotification", source, "~r~[Report] ~s~Ce report n'est plus valide")
         return
     end
     if players[reportId] ~= nil then
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", reportId, "~r~[Report] ~s~Votre report a été cloturé. N'hésitez pas à nous recontacter en cas de besoin.")
+        TriggerClientEvent("esx:showNotification", reportId, "~r~[Report] ~s~Votre report a été cloturé. N'hésitez pas à nous recontacter en cas de besoin.")
     end
     notifyActiveStaff("~r~[Report] ~s~Le staff ~r~"..GetPlayerName(source).."~s~ a ~g~cloturé ~s~le report ~y~n°"..reportsTable[reportId].uniqueId)
     reportsTable[reportId] = nil
@@ -56,7 +56,7 @@ function notifyActiveStaff(message)
     for k, player in pairs(players) do
         if player.rank ~= "user" then
             if inService[k] ~= nil then
-                TriggerClientEvent("::{korioz#0110}::esx:showNotification", k, message)
+                TriggerClientEvent("esx:showNotification", k, message)
             end
         end
     end
@@ -68,13 +68,13 @@ RegisterCommand("report", function(source, args)
         return
     end
     if reportsTable[source] ~= nil then
-        TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~[Report] ~s~Vous avez déjà un report actif.")
+        TriggerClientEvent("esx:showNotification", source, "~r~[Report] ~s~Vous avez déjà un report actif.")
         return
     end
     reportsCount = reportsCount + 1
     reportsTable[source] = { timeElapsed = {0,0}, uniqueId = reportsCount, id = source, name = GetPlayerName(source), reason = table.concat(args, " "), taken = false, createdAt = os.date('%c'), takenBy = nil }
     notifyActiveStaff("~r~[Report] ~s~Un nouveau report a été reçu. ID Unique: ~y~" .. reportsCount)
-    TriggerClientEvent("::{korioz#0110}::esx:showNotification", source, "~r~[Report] ~s~Votre report a été envoyé ! Vous serez informé quand il sera pris en charge et / ou cloturé.")
+    TriggerClientEvent("esx:showNotification", source, "~r~[Report] ~s~Votre report a été envoyé ! Vous serez informé quand il sera pris en charge et / ou cloturé.")
     updateReportsForStaff()
 end, false)
 

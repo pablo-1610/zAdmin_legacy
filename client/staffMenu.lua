@@ -157,8 +157,8 @@ function openMenu()
                             blipsActive = false
                             ESX.ShowNotification("~y~Désactivation du StaffMode...")
                             TriggerServerEvent("adminmenu:setStaffState", false)
-                            ESX.TriggerServerCallback('::{korioz#0110}::esx_skin:getPlayerSkin', function(skin)
-                                TriggerEvent('::{korioz#0110}::skinchanger:loadSkin', skin)
+                            ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
+                                TriggerEvent('skinchanger:loadSkin', skin)
                             end)
                         end
                     end)
@@ -168,8 +168,8 @@ function openMenu()
                             serverInteraction = true
                             ESX.ShowNotification("~y~Activation du StaffMode...")
                             TriggerServerEvent("adminmenu:setStaffState", true)
-                            TriggerEvent('::{korioz#0110}::skinchanger:getSkin', function(skin)
-                                TriggerEvent('::{korioz#0110}::skinchanger:loadClothes', skin, {
+                            TriggerEvent('skinchanger:getSkin', function(skin)
+                                TriggerEvent('skinchanger:loadClothes', skin, {
                                 ['bags_1'] = 0, ['bags_2'] = 0,
                                 ['tshirt_1'] = 15, ['tshirt_2'] = 2,
                                 ['torso_1'] = 178, ['torso_2'] = 5,
