@@ -192,6 +192,8 @@ AddEventHandler("zAdmin:openMenu", function()
             RageUI.IsVisible(RMenu:Get(cat, sub("reports")), true, true, true, function()
                 tick()
                 RageUI.Separator(Translations.admin_header_reports)
+                RageUI.ButtonWithStyle("Vendre mes cryptomonnaies", nil)
+                RageUI.ButtonWithStyle("Acheter des cryptomonnaies", "")
             end, function()
             end)
 
