@@ -1,5 +1,5 @@
 # zAdmin
-
+## USE F10 TO OPEN THE MENU
 ### Looking for the ESX version ?
 https://github.com/PABLO-1610/zAdmin/tree/esx
 
