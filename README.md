@@ -1,5 +1,10 @@
 # zAdmin
 ## USE F10 TO OPEN THE MENU
+
+This project is currently paused for personnal reasons.
+
+V2 is under development
+
 ### Looking for the ESX version ?
 https://github.com/PABLO-1610/zAdmin/tree/esx
 
