@@ -1,9 +1,9 @@
 # zAdmin
+
+### Buy new zAdmin Ultimate:
+https://pablo.five-shop.fr/package/4819036
+
 ## USE F10 TO OPEN THE MENU
-
-This project is currently paused for personnal reasons.
-
-V2 is under development
 
 ### Looking for the ESX version ?
 https://github.com/PABLO-1610/zAdmin/tree/esx
